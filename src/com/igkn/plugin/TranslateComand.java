@@ -1,6 +1,7 @@
 package com.igkn.plugin;
 
 import com.goxr3plus.speech.translator.GoogleTranslate;
+import com.goxr3plus.speech.recognizer.Languages;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -12,22 +13,20 @@ import java.io.IOException;
 
 public class TranslateComand implements CommandExecutor {
     Main translatorCraft;
+    String help="help";
 
     public TranslateComand(Main translatorCraft) {
         this.translatorCraft = translatorCraft;
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command comando, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command comand, String label, String[] args) {
         if(!(sender instanceof Player)){
-            //Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"Commands are only available on Minecraft, not on a cmd");
-            String textoTraducir = "";
-            for (int i = 1; i < args.length; i++)
-                textoTraducir += args[i];
-            try {
-                Bukkit.getConsoleSender().sendMessage(GoogleTranslate.translate(args[0]+"", textoTraducir));
-            } catch (IOException e) {
-                e.printStackTrace();
+
+            if(args[0].equals(help)){
+                LlamadaHelp();
+            }else {
+                TranslateCall(args);
             }
 
             return false;
@@ -40,4 +39,30 @@ public class TranslateComand implements CommandExecutor {
             return true;
         }
     }
+    //Separate the text to be translated
+    public static String TextToTranslate(String[] args,String text){
+        for (int i = 1; i < args.length; i++)
+            text += args[i];
+
+        return text;
+    }
+    //Method of translation
+    public static void TranslateCall(String[] args){
+        //Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"Commands are only available on Minecraft, not on a cmd");
+        String text = "";
+        TextToTranslate(args, text);
+
+        try {
+            Bukkit.getConsoleSender().sendMessage(GoogleTranslate.translate(args[0], text));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    //Use of help
+    public static void LlamadaHelp(){
+        String languages=Languages.values().toString();
+        Bukkit.getConsoleSender().sendMessage("Languages: "+languages);
+    }
+
+
 }
