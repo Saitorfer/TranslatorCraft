@@ -1,0 +1,7 @@
+main: com.igkn.plugin.Main
+version: 1.0
+name: TranslatorCraft
+
+commands:
+  tr:
+    description: Comando para traducir textos
