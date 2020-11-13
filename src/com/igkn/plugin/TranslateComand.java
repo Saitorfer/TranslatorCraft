@@ -10,27 +10,30 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class TranslateComand  implements CommandExecutor {
     Main translatorCraft;
-    HashMap<String,String> listLanguages;
     String help="help";
+    static String fileLanguage="src/documents/languagesList.txt";
 
-    public TranslateComand(Main translatorCraft, HashMap<String,String> list) {
+    public TranslateComand(Main translatorCraft) {
         this.translatorCraft = translatorCraft;
-        this.listLanguages=list;
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command comand, String label, String[] args) {
         boolean languageExist;
-        languageExist=LanguageExist(args[0]);
+        HashMap<String,String> listLanguages=readFile();
+        languageExist=LanguageExist(args[0],listLanguages);
 
         if(args[0].equals(help)){
-            LlamadaHelp(sender);
+            LlamadaHelp(sender,listLanguages);
         }else {
 
             if(languageExist){
@@ -62,7 +65,7 @@ public class TranslateComand  implements CommandExecutor {
     }
 
     //Use of help command
-    public void LlamadaHelp(CommandSender sender){
+    public void LlamadaHelp(CommandSender sender,HashMap<String,String> listLanguages){
         Player senderPlayer = (Player) sender;
         String textLanguages="";
 
@@ -73,8 +76,8 @@ public class TranslateComand  implements CommandExecutor {
 
     }
     //Check that the language exists
-    public boolean LanguageExist(String language){
-        if(listLanguages.containsKey(language)) {
+    public boolean LanguageExist(String language,HashMap<String,String> listLanguages){
+        if(listLanguages.containsValue(language)) {
             return true;
         }else {
             return false;
@@ -87,6 +90,32 @@ public class TranslateComand  implements CommandExecutor {
         Player senderPlayer = (Player) sender;
         senderPlayer.sendMessage(ChatColor.RED+"The language does not exist, please use [/tr help].");
 
+    }
+
+    public static HashMap<String,String> readFile(){
+        HashMap<String,String> languages=new HashMap<String,String>();
+
+        try {
+            File myObj = new File(fileLanguage);
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+
+                String[] parts = data.split(" ");
+                String languageName = parts[0];
+                String languageId = parts[1];
+
+                languages.put(languageName,languageId);
+
+                System.out.println("language: "+languageName+" id: "+languageId);
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred in file lecture.");
+            e.printStackTrace();
+        }
+
+        return languages;
     }
 
 
