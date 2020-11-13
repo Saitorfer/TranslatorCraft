@@ -40,11 +40,11 @@ public class TranslateComand  implements CommandExecutor {
 
     //Method of translation command
     public void TranslateCall(String languaje, String text, CommandSender sender) throws IOException {
-        /*Player p = (Player) sender;
-        World world =  p.getWorld();*/
+        Player senderPlayer = (Player) sender;
+        /*World world =  p.getWorld();*/
 
         for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-            p.sendMessage(ChatColor.GREEN+p.getName()+": "+GoogleTranslate.translate(languaje,text)+" (TRANSLATED)");
+            p.sendMessage(ChatColor.GREEN+senderPlayer.getName()+": "+GoogleTranslate.translate(languaje,text)+" (TRANSLATED)");
         }
     }
 
