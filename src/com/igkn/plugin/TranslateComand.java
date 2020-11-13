@@ -28,6 +28,8 @@ public class TranslateComand implements CommandExecutor {
             for (int i = 1; i < args.length; i++)
                 text += args[i];
             TranslateCall(args[0], text);
+            Player p = (Player) sender;
+            p.sendMessage(ChatColor.YELLOW+text);
         }
         return true;
     }
