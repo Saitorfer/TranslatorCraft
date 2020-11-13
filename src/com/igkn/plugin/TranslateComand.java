@@ -21,34 +21,16 @@ public class TranslateComand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command comand, String label, String[] args) {
-        if(!(sender instanceof Player)){
-
-            if(args[0].equals(help)){
-                LlamadaHelp();
-            }else {
-               // TranslateCall(args);
-                String text= "";
-                for (int i = 1; i < args.length; i++)
-                    text += args[i];
-                TranslateCall(args[0], text);
-            }
-
-            return false;
+        if(args[0].equals(help)){
+            LlamadaHelp();
+        }else {
+            String text= "";
+            for (int i = 1; i < args.length; i++)
+                text += args[i];
+            TranslateCall(args[0], text);
         }
-        else{
-            Bukkit.getConsoleSender().sendMessage(label);
-            for (String arg : args){
-                Bukkit.getConsoleSender().sendMessage(args);
-            }
-            return true;
-        }
+        return true;
     }
-    //Separate the text to be translated
-    /*public void TextToTranslate(String[] args,String text){
-        for (int i = 1; i < args.length; i++)
-            text += args[i];
-
-    }*/
     //Method of translation command
     public void TranslateCall(String languaje, String text){
         //Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"Commands are only available on Minecraft, not on a cmd");
