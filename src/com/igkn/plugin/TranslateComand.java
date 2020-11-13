@@ -26,7 +26,11 @@ public class TranslateComand implements CommandExecutor {
             if(args[0].equals(help)){
                 LlamadaHelp();
             }else {
-                TranslateCall(args);
+               // TranslateCall(args);
+                String text= "";
+                for (int i = 1; i < args.length; i++)
+                    text += args[i];
+                TranslateCall(args[0], text);
             }
 
             return false;
@@ -40,19 +44,18 @@ public class TranslateComand implements CommandExecutor {
         }
     }
     //Separate the text to be translated
-    public void TextToTranslate(String[] args,String text){
+    /*public void TextToTranslate(String[] args,String text){
         for (int i = 1; i < args.length; i++)
             text += args[i];
 
-    }
+    }*/
     //Method of translation command
-    public void TranslateCall(String[] args){
+    public void TranslateCall(String languaje, String text){
         //Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"Commands are only available on Minecraft, not on a cmd");
-        String text = "";
-        TextToTranslate(args, text);
+        //TextToTranslate(args, text);
 
         try {
-            Bukkit.getConsoleSender().sendMessage(GoogleTranslate.translate(args[0], text));
+            Bukkit.getConsoleSender().sendMessage(GoogleTranslate.translate(languaje, text));
         } catch (IOException e) {
             e.printStackTrace();
         }
