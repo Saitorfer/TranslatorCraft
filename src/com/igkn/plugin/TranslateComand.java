@@ -40,14 +40,13 @@ public class TranslateComand implements CommandExecutor {
         }
     }
     //Separate the text to be translated
-    public static String TextToTranslate(String[] args,String text){
+    public void TextToTranslate(String[] args,String text){
         for (int i = 1; i < args.length; i++)
             text += args[i];
 
-        return text;
     }
-    //Method of translation
-    public static void TranslateCall(String[] args){
+    //Method of translation command
+    public void TranslateCall(String[] args){
         //Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"Commands are only available on Minecraft, not on a cmd");
         String text = "";
         TextToTranslate(args, text);
@@ -58,8 +57,8 @@ public class TranslateComand implements CommandExecutor {
             e.printStackTrace();
         }
     }
-    //Use of help
-    public static void LlamadaHelp(){
+    //Use of help command
+    public void LlamadaHelp(){
         String languages=Languages.values().toString();
         Bukkit.getConsoleSender().sendMessage("Languages: "+languages);
     }
