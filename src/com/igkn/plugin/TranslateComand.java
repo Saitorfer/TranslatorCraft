@@ -2,8 +2,8 @@ package com.igkn.plugin;
 
 import com.goxr3plus.speech.translator.GoogleTranslate;
 import com.goxr3plus.speech.recognizer.Languages;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.CommandExecutor;
@@ -26,10 +26,10 @@ public class TranslateComand implements CommandExecutor {
         }else {
             String text= "";
             for (int i = 1; i < args.length; i++)
-                text += args[i];
+                text += args[i]+" ";
             TranslateCall(args[0], text);
             Player p = (Player) sender;
-            p.sendMessage(ChatColor.YELLOW+text);
+            Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN+p.getName()+": "+text+" (TRANSLATED)");
         }
         return true;
     }
