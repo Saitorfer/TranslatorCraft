@@ -29,8 +29,9 @@ public class Main extends JavaPlugin {
     }
 
     public void translateCommand(){
+        HashMap<String,String> listLanguage=readFile();
        this.getCommand("tr").setExecutor(
-                new TranslateComand(this));
+                new TranslateComand(this,listLanguage));
     }
 
     public static HashMap<String,String> readFile(){

@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TranslatorCraft:jar2">
+    <output-path>$PROJECT_DIR$/out/artifacts/TranslatorCraft_jar2</output-path>
+    <root id="archive" name="TranslatorCraft.jar">
+      <element id="module-output" name="TranslatorCraft" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libraries/java-google-speech-api.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libraries/spigot-1.16.4.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
