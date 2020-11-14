@@ -1,20 +1,16 @@
 package com.igkn.plugin;
 
 import com.goxr3plus.speech.translator.GoogleTranslate;
-import com.goxr3plus.speech.recognizer.Languages;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class TranslateComand  implements CommandExecutor {
@@ -69,8 +65,11 @@ public class TranslateComand  implements CommandExecutor {
         Player senderPlayer = (Player) sender;
         String textLanguages="";
 
-        for (Map.Entry<String, String> entry : listLanguages.entrySet()) {
-            textLanguages+=textLanguages+ ", "+entry.getValue()+" ("+entry.getKey()+") ";
+        //for (Map.Entry<String, String> entry : listLanguages.entrySet()) {
+        //    textLanguages+=textLanguages+ ", "+entry.getValue()+" ("+entry.getKey()+") ";
+        //}
+        for (String entry : listLanguages.values()) {
+            textLanguages+=textLanguages+ ", "+entry;
         }
         senderPlayer.sendMessage(ChatColor.GOLD+"Languages: "+ChatColor.WHITE+textLanguages);
 
