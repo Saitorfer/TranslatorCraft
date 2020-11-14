@@ -17,7 +17,7 @@ import java.util.Scanner;
 public class TranslateComand  implements CommandExecutor {
     Main translatorCraft;
     String help="help";
-    static String fileLanguage="src/documents/languagesList.txt";
+    static String fileLanguage="folder/src/documents/languagesList.txt";
 
     public TranslateComand(Main translatorCraft) {
         this.translatorCraft = translatorCraft;
