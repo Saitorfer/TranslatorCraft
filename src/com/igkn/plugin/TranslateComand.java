@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class TranslateComand  implements CommandExecutor {
@@ -25,13 +26,18 @@ public class TranslateComand  implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command comand, String label, String[] args) {
         boolean languageExist;
+        Player senderPlayer = (Player) sender;
         HashMap<String,String> listLanguages=readFile();
         languageExist=LanguageExist(args[0],listLanguages);
+
+        //Check if the file work
+        if(listLanguages.isEmpty()) {
+            senderPlayer.sendMessage(ChatColor.RED + "Error in TranslatorCraft file [languages] not loaded.");
+        }
 
         if(args[0].equals(help)){
             LlamadaHelp(sender,listLanguages);
         }else {
-
             if(languageExist){
                 String text= "";
                 for (int i = 1; i < args.length; i++)
@@ -44,8 +50,6 @@ public class TranslateComand  implements CommandExecutor {
             }else{
                 MessageError(sender);
             }
-
-
         }
         return true;
     }
@@ -65,11 +69,8 @@ public class TranslateComand  implements CommandExecutor {
         Player senderPlayer = (Player) sender;
         String textLanguages="";
 
-        //for (Map.Entry<String, String> entry : listLanguages.entrySet()) {
-        //    textLanguages+=textLanguages+ ", "+entry.getValue()+" ("+entry.getKey()+") ";
-        //}
-        for (String entry : listLanguages.values()) {
-            textLanguages+=textLanguages+ ", "+entry;
+        for (Map.Entry<String, String> entry : listLanguages.entrySet()) {
+            textLanguages+=textLanguages+ ", "+entry.getValue()+" ("+entry.getKey()+") ";
         }
         senderPlayer.sendMessage(ChatColor.GOLD+"Languages: "+ChatColor.WHITE+textLanguages);
 
@@ -81,7 +82,6 @@ public class TranslateComand  implements CommandExecutor {
         }else {
             return false;
         }
-
     }
 
     //Error Message
