@@ -7,37 +7,34 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class TranslateComand  implements CommandExecutor {
     Main translatorCraft;
-    String help="help";
-    static String fileLanguage="folder/src/documents/languagesList.txt";
+    HashMap<String, String> languages;
 
-    public TranslateComand(Main translatorCraft) {
+    public TranslateComand(Main translatorCraft, HashMap<String, String> languages) {
         this.translatorCraft = translatorCraft;
+        this.languages = languages;
+
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command comand, String label, String[] args) {
         boolean languageExist;
         Player senderPlayer = (Player) sender;
-        HashMap<String,String> listLanguages=readFile();
-        languageExist=LanguageExist(args[0],listLanguages);
+        languageExist=LanguageExist(args[0],languages);
 
         //Check if the file work
-        if(listLanguages.isEmpty()) {
+        if(languages.isEmpty()) {
             senderPlayer.sendMessage(ChatColor.RED + "Error in TranslatorCraft file [languages] not loaded.");
         }
 
-        if(args[0].equals(help)){
-            LlamadaHelp(sender,listLanguages);
-        }else {
+        if (args[0].equals("help")){
+            LlamadaHelp(sender, languages);
+        } else{
             if(languageExist){
                 String text= "";
                 for (int i = 1; i < args.length; i++)
@@ -57,7 +54,6 @@ public class TranslateComand  implements CommandExecutor {
     //Method of translation command
     public void TranslateCall(String languaje, String text, CommandSender sender) throws IOException {
         Player senderPlayer = (Player) sender;
-        /*World world =  p.getWorld();*/
 
         for (Player p : Bukkit.getServer().getOnlinePlayers()) {
             p.sendMessage(ChatColor.GREEN+senderPlayer.getName()+": "+GoogleTranslate.translate(languaje,text)+" (TRANSLATED)");
@@ -70,9 +66,13 @@ public class TranslateComand  implements CommandExecutor {
         String textLanguages="";
 
         for (Map.Entry<String, String> entry : listLanguages.entrySet()) {
-            textLanguages+=textLanguages+ ", "+entry.getValue()+" ("+entry.getKey()+") ";
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            textLanguages = textLanguages + ChatColor.BLUE+key+" -> "+ChatColor.WHITE+value+", ";
         }
-        senderPlayer.sendMessage(ChatColor.GOLD+"Languages: "+ChatColor.WHITE+textLanguages);
+
+        //Bukkit.getConsoleSender().sendMessage(textLanguages);
+        senderPlayer.sendMessage(ChatColor.GOLD+"Languages: \n"+textLanguages);
 
     }
     //Check that the language exists
@@ -90,33 +90,4 @@ public class TranslateComand  implements CommandExecutor {
         senderPlayer.sendMessage(ChatColor.RED+"The language does not exist, please use [/tr help].");
 
     }
-
-    public static HashMap<String,String> readFile(){
-        HashMap<String,String> languages=new HashMap<String,String>();
-
-        try {
-            File myObj = new File(fileLanguage);
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-
-                String[] parts = data.split(" ");
-                String languageName = parts[0];
-                String languageId = parts[1];
-
-                languages.put(languageName,languageId);
-
-                System.out.println("language: "+languageName+" id: "+languageId);
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred in file lecture.");
-            e.printStackTrace();
-        }
-
-        return languages;
-    }
-
-
-
 }
