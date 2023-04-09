@@ -1,6 +1,8 @@
 Hello!
 This is a Minecraft plugin to translate messages to another language.
 
+Download it from Bukkit: https://dev.bukkit.org/projects/translatorcraft
+
 How it works?
 
 /tr [language] [text to translate]
